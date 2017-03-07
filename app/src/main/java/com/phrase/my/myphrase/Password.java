@@ -19,12 +19,12 @@ public class Password {
         editor = context.getSharedPreferences(AppConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE).edit();
     }
 
-    public void SetPassword(String password){
+    public void setPassword(String password){
         this.editor.putString(AppConstants.MPIN, password);
         this.editor.commit();
     }
 
-    public String GetPassword(){
+    public String getPassword(){
         return  this.sharedPrefs.getString(AppConstants.MPIN, null);
     }
 }

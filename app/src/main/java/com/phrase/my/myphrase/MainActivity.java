@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
         setContentView(R.layout.activity_main);
 
         password = new com.phrase.my.myphrase.Password(this);
-        mpin = password.GetPassword();
+        mpin = password.getPassword();
 
         imageView = (ImageView)findViewById(R.id.image_1);
         blurLockView = (BlurLockView)findViewById(R.id.blurlockview);
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
     public void correct(String inputPassword) {
         switch (mode){
             case CONFIRM_INITIAL:
-                password.SetPassword(inputPassword);
+                password.setPassword(inputPassword);
                 blurLockView.setCorrectPassword(inputPassword);
                 Toast.makeText(this, "Welcome To My Phrase", Toast.LENGTH_SHORT).show();
                 break;

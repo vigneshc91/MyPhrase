@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PasswordViewActivity"></activity>
+        <activity android:name=".PasswordViewActivity" />
+        <activity android:name=".AddPasswordActivity"></activity>
     </application>
 
 </manifest>

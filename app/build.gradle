@@ -30,4 +30,5 @@ dependencies {
 //    compile 'com.nightonke:blurlockview:1.0.0'
     compile project(':blurlockview')
 
+    compile 'com.android.support:design:25.2.0'
 }
