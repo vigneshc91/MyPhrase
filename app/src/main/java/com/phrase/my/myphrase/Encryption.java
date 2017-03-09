@@ -19,7 +19,8 @@ public class Encryption {
 
     public static SecretKey generateKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
-        SecretKey secret = new SecretKeySpec(password.getBytes(), "AES");
+        String key = AppConstants.ENCRYPTION_SECRET_KEY + password;
+        SecretKey secret = new SecretKeySpec(key.getBytes(), "AES");
         return secret;
     }
 
@@ -30,7 +31,7 @@ public class Encryption {
         cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] cipherText = cipher.doFinal(password.getBytes("UTF-8"));
-        return new String(cipherText, "UTF-8");
+        return cipherText.toString();
     }
 
     public static String decryptPassword(String cipherPassword, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidParameterSpecException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeySpecException {

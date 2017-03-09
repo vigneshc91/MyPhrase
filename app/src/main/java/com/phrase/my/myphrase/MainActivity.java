@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.nightonke.blurlockview.BlurLockView;
 import com.nightonke.blurlockview.Password;
+import com.orm.SugarContext;
+import com.orm.SugarRecord;
 
 public class MainActivity extends AppCompatActivity implements BlurLockView.OnLeftButtonClickListener, BlurLockView.OnPasswordInputListener {
     private BlurLockView blurLockView;
@@ -46,19 +48,26 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
         }
         blurLockView.setOnPasswordInputListener(this);
         blurLockView.setOnLeftButtonClickListener(this);
+        SugarContext.init(this);
+    }
+
+    public void onTerminate(){
+        SugarContext.terminate();
     }
 
     @Override
     public void correct(String inputPassword) {
+        Intent viewActivityIntent = new Intent(MainActivity.this, PasswordViewActivity.class);
         switch (mode){
             case CONFIRM_INITIAL:
                 password.setPassword(inputPassword);
                 blurLockView.setCorrectPassword(inputPassword);
                 Toast.makeText(this, "Welcome To My Phrase", Toast.LENGTH_SHORT).show();
+                startActivity(viewActivityIntent);
+                finish();
                 break;
             case ACTIVATED:
                 Toast.makeText(this, "Welcome back To My Phrase", Toast.LENGTH_SHORT).show();
-                Intent viewActivityIntent = new Intent(MainActivity.this, PasswordViewActivity.class);
                 startActivity(viewActivityIntent);
                 finish();
                 break;

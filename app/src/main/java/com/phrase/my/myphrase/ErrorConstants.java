@@ -9,4 +9,6 @@ public class ErrorConstants {
     public static final String ERROR = "Error";
     public static final String ALERT = "Alert";
     public static final String REQUIRED_FIELDS_EMPTY = "Required Fields Empty.";
+
+    public static final String PASSWORD_ADD_FAILED = "Password Add Failed";
 }

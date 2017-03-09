@@ -8,6 +8,7 @@ public class AppConstants {
 
     public static final String SHARED_PREFERENCES_NAME = "MyPhraseSharedPrefs";
     public static final String MPIN = "mpin";
+    public static final String ENCRYPTION_SECRET_KEY = "MyPhraseKey!";
 
     public static enum mode{
         INITIAL,
