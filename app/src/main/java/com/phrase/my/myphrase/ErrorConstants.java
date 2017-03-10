@@ -11,4 +11,6 @@ public class ErrorConstants {
     public static final String REQUIRED_FIELDS_EMPTY = "Required Fields Empty.";
 
     public static final String PASSWORD_ADD_FAILED = "Password Add Failed";
+    public static final String PASSWORD_EDIT_FAILED = "Password Edit Failed";
+
 }

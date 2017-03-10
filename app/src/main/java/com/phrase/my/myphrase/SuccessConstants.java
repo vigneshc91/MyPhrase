@@ -7,4 +7,6 @@ package com.phrase.my.myphrase;
 public class SuccessConstants {
 
     public static final String PASSWORD_ADD_SUCCESS = "Password Added Successfully";
+    public static final String PASSWORD_EDIT_SUCCESS = "Password Edited Successfully";
+
 }

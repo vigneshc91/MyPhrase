@@ -31,7 +31,8 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.phrase" />
 
-        <activity android:name=".ViewPasswordActivity"></activity>
+        <activity android:name=".ViewPasswordActivity" />
+        <activity android:name=".EditPasswordActivity" />
     </application>
 
 </manifest>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyPhrase</string>
+    <string name="title_activity_edit_password">EditPasswordActivity</string>
 </resources>

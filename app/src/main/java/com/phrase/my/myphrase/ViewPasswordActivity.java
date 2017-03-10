@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.security.GeneralSecurityException;
 
@@ -25,7 +24,7 @@ public class ViewPasswordActivity extends AppCompatActivity {
         userName = (TextView) findViewById(R.id.userNameTextView);
         password = (TextView) findViewById(R.id.passwordTextView);
         comments = (TextView) findViewById(R.id.commentsTextView);
-        editBtn = (FloatingActionButton) findViewById(R.id.editDetailBtn);
+        editBtn = (FloatingActionButton) findViewById(R.id.editDetailFabBtn);
 
         Password passwordPin = new Password(this);
         mpin = passwordPin.getPassword();
@@ -38,7 +37,9 @@ public class ViewPasswordActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent editPasswordIntent = new Intent(ViewPasswordActivity.this, EditPasswordActivity.class);
+                editPasswordIntent.putExtra("detail_id", detailId);
+                startActivity(editPasswordIntent);
             }
         });
 
