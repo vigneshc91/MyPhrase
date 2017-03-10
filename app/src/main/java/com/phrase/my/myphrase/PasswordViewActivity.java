@@ -10,7 +10,18 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class PasswordViewActivity extends AppCompatActivity {
 
@@ -32,18 +43,17 @@ public class PasswordViewActivity extends AppCompatActivity {
             }
         });
 
-        detailListView = (ListView) findViewById(R.id.passwordListView);
-        List<Detail> detailList = DbOperations.getAllDetails();
-
-        DetailListAdapter detailListAdapter = new DetailListAdapter(this, detailList);
-        detailListView.setAdapter(detailListAdapter);
+        setListAdapter();
 
         detailListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object obj = detailListView.getItemAtPosition(position);
                 Detail detail = (Detail) obj;
-                Log.d("title", detail.getId().toString());
+
+                Intent viewPasswordIntent = new Intent(PasswordViewActivity.this, ViewPasswordActivity.class);
+                viewPasswordIntent.putExtra("detail_id", detail.getId().toString());
+                startActivity(viewPasswordIntent);
             }
         });
     }
@@ -51,6 +61,10 @@ public class PasswordViewActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setListAdapter();
+    }
+
+    private void setListAdapter(){
         detailListView = (ListView) findViewById(R.id.passwordListView);
         List<Detail> detailList = DbOperations.getAllDetails();
 

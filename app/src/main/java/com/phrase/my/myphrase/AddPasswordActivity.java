@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.orm.SugarContext;
 
 import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -77,9 +78,9 @@ public class AddPasswordActivity extends AppCompatActivity {
                         e.printStackTrace();
                     } catch (BadPaddingException e) {
                         e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
                     } catch (InvalidKeySpecException e) {
+                        e.printStackTrace();
+                    } catch (GeneralSecurityException e) {
                         e.printStackTrace();
                     }
 

@@ -1,14 +1,8 @@
 package com.phrase.my.myphrase;
 
-import java.io.UnsupportedEncodingException;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.InvalidParameterSpecException;
+import com.scottyab.aescrypt.AESCrypt;
 
-import javax.crypto.Cipher;
-import javax.crypto.*;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import java.security.*;
 
 
 /**
@@ -17,31 +11,23 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encryption {
 
-    public static SecretKey generateKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
+    public static String getSecretKey(String password)
     {
         String key = AppConstants.ENCRYPTION_SECRET_KEY + password;
-        SecretKey secret = new SecretKeySpec(key.getBytes(), "AES");
-        return secret;
+        return key;
     }
 
-    public static String encryptPassword(String password, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidKeySpecException {
+    public static String encryptPassword(String password, String key) throws GeneralSecurityException {
         /* Encrypt the message. */
-        SecretKey secretKey = generateKey(key);
-        Cipher cipher = null;
-        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] cipherText = cipher.doFinal(password.getBytes("UTF-8"));
-        return cipherText.toString();
+        String secretKey = getSecretKey(key);
+        String encryptedString = AESCrypt.encrypt(secretKey, password);
+        return encryptedString;
     }
 
-    public static String decryptPassword(String cipherPassword, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidParameterSpecException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeySpecException {
+    public static String decryptPassword(String cipherPassword, String key) throws GeneralSecurityException {
         /* Decrypt the message, given derived encContentValues and initialization vector. */
-        SecretKey secretKey = generateKey(key);
-        Cipher cipher = null;
-        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        byte[] cipherBytes = cipherPassword.getBytes("UTF-8");
-        String decryptString = new String(cipher.doFinal(cipherBytes), "UTF-8");
-        return decryptString;
+        String secretKey = getSecretKey(key);
+        String decryptedString = AESCrypt.decrypt(secretKey, cipherPassword);
+        return decryptedString;
     }
 }

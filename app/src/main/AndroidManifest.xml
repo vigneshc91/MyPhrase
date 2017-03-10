@@ -16,12 +16,22 @@
             </intent-filter>
         </activity>
         <activity android:name=".PasswordViewActivity" />
-        <activity android:name=".AddPasswordActivity"></activity>
+        <activity android:name=".AddPasswordActivity" />
 
-        <meta-data android:name="DATABASE" android:value="myphrase.db" />
-        <meta-data android:name="VERSION" android:value="1" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.phrase" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="myphrase.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.phrase" />
+
+        <activity android:name=".ViewPasswordActivity"></activity>
     </application>
 
 </manifest>
