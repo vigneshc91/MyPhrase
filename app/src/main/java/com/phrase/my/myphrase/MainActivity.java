@@ -3,6 +3,7 @@ package com.phrase.my.myphrase;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,10 +34,10 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
 
         imageView = (ImageView)findViewById(R.id.image_1);
         blurLockView = (BlurLockView)findViewById(R.id.blurlockview);
-        blurLockView.setBlurredView(imageView);
+//        blurLockView.setBlurredView(imageView);
 
         blurLockView.setTitle("Enter your mpin");
-        blurLockView.setLeftButton("Confirm");
+        blurLockView.setLeftButton("");
         blurLockView.setRightButton("Erase");
         blurLockView.setType(Password.NUMBER, true);
         if(mpin == null) {

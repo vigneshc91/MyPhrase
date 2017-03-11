@@ -7,14 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.security.GeneralSecurityException;
 
 public class ViewPasswordActivity extends AppCompatActivity {
 
     private TextView userName, password, comments;
+    private ToggleButton passwordShow;
     private FloatingActionButton editBtn;
-    String mpin, detailId;
+    String mpin, detailId, maskedPassword = "", decryptedPassword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class ViewPasswordActivity extends AppCompatActivity {
         password = (TextView) findViewById(R.id.passwordTextView);
         comments = (TextView) findViewById(R.id.commentsTextView);
         editBtn = (FloatingActionButton) findViewById(R.id.editDetailFabBtn);
+        passwordShow = (ToggleButton) findViewById(R.id.passwordShowToggle);
+
 
         Password passwordPin = new Password(this);
         mpin = passwordPin.getPassword();
@@ -43,6 +47,17 @@ public class ViewPasswordActivity extends AppCompatActivity {
             }
         });
 
+        passwordShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(((ToggleButton) v).isChecked()){
+                    password.setText(decryptedPassword);
+                } else {
+                    password.setText(maskedPassword);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -55,16 +70,22 @@ public class ViewPasswordActivity extends AppCompatActivity {
         Detail detail = DbOperations.getDetailById(Integer.parseInt(detailId));
         setTitle(detail.title);
 
-        String decryptedPassword = "";
-
         try {
             decryptedPassword = Encryption.decryptPassword(detail.password, mpin);
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
 
+        String mask = "";
+        for (int i=0; i<decryptedPassword.length(); i++){
+            mask += "*";
+        }
+        maskedPassword = mask;
+
         userName.setText(detail.userName);
-        password.setText(decryptedPassword);
+        password.setText(maskedPassword);
         comments.setText(detail.comment);
+
+
     }
 }
