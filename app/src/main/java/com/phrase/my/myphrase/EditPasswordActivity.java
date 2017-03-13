@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +14,7 @@ import android.widget.Toast;
 
 import java.security.GeneralSecurityException;
 
-public class EditPasswordActivity extends AppCompatActivity {
+public class EditPasswordActivity extends MenuActivity {
 
     private EditText title, userName, password, comments;
     private Button editBtn;
@@ -88,6 +90,14 @@ public class EditPasswordActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuItem menuItem = menu.findItem(R.id.menuEditDetail);
+        menuItem.setVisible(false);
+        return true;
     }
 
 }

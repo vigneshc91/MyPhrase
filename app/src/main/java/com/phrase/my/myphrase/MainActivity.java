@@ -1,21 +1,14 @@
 package com.phrase.my.myphrase;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nightonke.blurlockview.BlurLockView;
 import com.nightonke.blurlockview.Password;
 import com.orm.SugarContext;
-import com.orm.SugarRecord;
 
 public class MainActivity extends AppCompatActivity implements BlurLockView.OnLeftButtonClickListener, BlurLockView.OnPasswordInputListener {
     private BlurLockView blurLockView;
@@ -36,9 +29,9 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
         blurLockView = (BlurLockView)findViewById(R.id.blurlockview);
 //        blurLockView.setBlurredView(imageView);
 
-        blurLockView.setTitle("Enter your mpin");
+        blurLockView.setTitle(SuccessConstants.ENTER_YOUR_MPIN);
         blurLockView.setLeftButton("");
-        blurLockView.setRightButton("Erase");
+        blurLockView.setRightButton(AppConstants.BACKSPACE_STRING);
         blurLockView.setType(Password.NUMBER, true);
         if(mpin == null) {
             blurLockView.setCorrectPassword("");
@@ -46,6 +39,12 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
         } else {
             blurLockView.setCorrectPassword(mpin);
             mode = AppConstants.mode.ACTIVATED;
+        }
+
+        Intent intent = this.getIntent();
+        if(intent != null && intent.getExtras() != null){
+            mode = AppConstants.mode.OLD_PIN;
+            blurLockView.setTitle(SuccessConstants.ENTER_YOUR_OLD_MPIN);
         }
         blurLockView.setOnPasswordInputListener(this);
         blurLockView.setOnLeftButtonClickListener(this);
@@ -58,17 +57,29 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
 
     @Override
     public void correct(String inputPassword) {
-        Intent viewActivityIntent = new Intent(MainActivity.this, PasswordViewActivity.class);
+        Intent viewActivityIntent = new Intent(MainActivity.this, PasswordViewListActivity.class);
         switch (mode){
             case CONFIRM_INITIAL:
                 password.setPassword(inputPassword);
                 blurLockView.setCorrectPassword(inputPassword);
-                Toast.makeText(this, "Welcome To My Phrase", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, SuccessConstants.WELCOME_TO_MY_PHRASE, Toast.LENGTH_SHORT).show();
                 startActivity(viewActivityIntent);
                 finish();
                 break;
             case ACTIVATED:
-                Toast.makeText(this, "Welcome back To My Phrase", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, SuccessConstants.WELCOME_BACK_TO_MY_PHRASE, Toast.LENGTH_SHORT).show();
+                startActivity(viewActivityIntent);
+                finish();
+                break;
+            case OLD_PIN:
+                blurLockView.setTitle(SuccessConstants.ENTER_YOUR_NEW_MPIN);
+                mode = AppConstants.mode.CHANGE_PIN;
+                blurLockView.setCorrectPassword("");
+                break;
+            case CONFIRM_PIN:
+                password.setPassword(inputPassword);
+                blurLockView.setCorrectPassword(inputPassword);
+                Toast.makeText(this, SuccessConstants.MPIN_CHANGED_SUCCESSFULLY, Toast.LENGTH_SHORT).show();
                 startActivity(viewActivityIntent);
                 finish();
                 break;
@@ -81,12 +92,21 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
         switch (mode){
             case INITIAL:
                 if(inputPassword.length() == 4){
-                    Toast.makeText(this, "Re-Enter the mpin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, SuccessConstants.RE_ENTER_YOUR_MPIN, Toast.LENGTH_SHORT).show();
                     blurLockView.setCorrectPassword(inputPassword);
                     this.mode = AppConstants.mode.CONFIRM_INITIAL;
-                    blurLockView.setTitle("Confirm your mpin");
+                    blurLockView.setTitle(SuccessConstants.CONFIRM_YOUR_MPIN);
                 }
                 break;
+            case CHANGE_PIN:
+                if(inputPassword.length() == 4){
+                    Toast.makeText(this, SuccessConstants.CONFIRM_YOUR_NEW_MPIN, Toast.LENGTH_SHORT).show();
+                    blurLockView.setCorrectPassword(inputPassword);
+                    this.mode = AppConstants.mode.CONFIRM_PIN;
+                    blurLockView.setTitle(SuccessConstants.CONFIRM_YOUR_NEW_MPIN);
+                }
+                break;
+
         }
     }
 
@@ -94,13 +114,19 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
     public void incorrect(String inputPassword) {
         switch (mode){
             case CONFIRM_INITIAL:
-                Toast.makeText(this, "Invalid mpin, Please try again "+inputPassword, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ErrorConstants.INVALID_MPIN, Toast.LENGTH_SHORT).show();
                 this.mode = AppConstants.mode.INITIAL;
                 blurLockView.setCorrectPassword("");
-                blurLockView.setTitle("Enter your mpin");
+                blurLockView.setTitle(SuccessConstants.ENTER_YOUR_MPIN);
                 break;
             case ACTIVATED:
-                Toast.makeText(this, "Wrong mpin, Please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, ErrorConstants.WRONG_MPIN, Toast.LENGTH_SHORT).show();
+                break;
+            case OLD_PIN:
+                Toast.makeText(this, ErrorConstants.WRONG_MPIN, Toast.LENGTH_SHORT).show();
+                break;
+            case CONFIRM_PIN:
+                Toast.makeText(this, ErrorConstants.WRONG_MPIN, Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -111,4 +137,5 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
     public void onClick() {
 
     }
+
 }

@@ -5,13 +5,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.security.GeneralSecurityException;
 
-public class ViewPasswordActivity extends AppCompatActivity {
+public class ViewPasswordActivity extends MenuActivity {
 
     private TextView userName, password, comments;
     private ToggleButton passwordShow;
@@ -85,7 +86,18 @@ public class ViewPasswordActivity extends AppCompatActivity {
         userName.setText(detail.userName);
         password.setText(maskedPassword);
         comments.setText(detail.comment);
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuEditDetail:
+                Intent editPasswordIntent = new Intent(ViewPasswordActivity.this, EditPasswordActivity.class);
+                editPasswordIntent.putExtra("detail_id", detailId);
+                startActivity(editPasswordIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

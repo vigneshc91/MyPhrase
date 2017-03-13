@@ -12,5 +12,7 @@ public class ErrorConstants {
 
     public static final String PASSWORD_ADD_FAILED = "Password Add Failed";
     public static final String PASSWORD_EDIT_FAILED = "Password Edit Failed";
+    public static final String INVALID_MPIN = "Invalid mpin, Please try again";
+    public static final String WRONG_MPIN = "Wrong mpin, Please try again";
 
 }

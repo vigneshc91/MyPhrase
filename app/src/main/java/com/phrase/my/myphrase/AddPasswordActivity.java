@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +13,7 @@ import android.widget.Toast;
 
 import java.security.GeneralSecurityException;
 
-public class AddPasswordActivity extends AppCompatActivity {
+public class AddPasswordActivity extends MenuActivity {
 
     private EditText title, userName, password, comments;
     private Button addBtn;
@@ -70,5 +72,15 @@ public class AddPasswordActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuItem createMenuItem = menu.findItem(R.id.menuCreateDetail);
+        createMenuItem.setVisible(false);
+        MenuItem editMenuItem = menu.findItem(R.id.menuEditDetail);
+        editMenuItem.setVisible(false);
+        return true;
     }
 }
