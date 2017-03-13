@@ -380,7 +380,11 @@ public class BlurLockView extends FrameLayout
             throw new RuntimeException("The correct password has NOT been set!");
         }
         if(correctPassword.length() == 0){
+            if(passwordStack.size() == 0){
+                indicator.clear();
+            }
             passwordStack.push(string);
+            indicator.add();
             StringBuilder pass = new StringBuilder("");
             for (String s : passwordStack) {
                 pass.append(s);
@@ -390,6 +394,9 @@ public class BlurLockView extends FrameLayout
             return;
         }
         if (passwordStack.size() >= passwordLength) return;
+        if(passwordStack.size() == 0){
+            indicator.clear();
+        }
         passwordStack.push(string);
         indicator.add();
         StringBuilder nowPassword = new StringBuilder("");
@@ -618,7 +625,7 @@ public class BlurLockView extends FrameLayout
      * @param correctPassword The target password.
      */
     public void setCorrectPassword(String correctPassword) {
-        setPasswordLength(correctPassword.length());
+        setPasswordLength(correctPassword.length() > 0 ? correctPassword.length() : 4);
         this.correctPassword = correctPassword;
     }
 

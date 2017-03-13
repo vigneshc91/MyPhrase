@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements BlurLockView.OnLe
         }
 
         Intent intent = this.getIntent();
-        if(intent != null && intent.getExtras() != null){
+        if(intent != null && intent.getExtras() != null && intent.getExtras().getBoolean("changePin") != false){
             mode = AppConstants.mode.OLD_PIN;
             blurLockView.setTitle(SuccessConstants.ENTER_YOUR_OLD_MPIN);
         }

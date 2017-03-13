@@ -98,6 +98,10 @@ public class PasswordViewListActivity extends MenuActivity {
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
+                for (int i=0; i<detailListView.getChildCount(); i++){
+                    View view = detailListView.getChildAt(i);
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                }
                 detailListAdapter.removeSelection();
             }
         });
