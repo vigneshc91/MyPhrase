@@ -31,8 +31,16 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.phrase" />
 
-        <activity android:name=".ViewPasswordActivity" />
-        <activity android:name=".EditPasswordActivity" />
+        <activity android:name=".ViewPasswordActivity" android:parentActivityName=".PasswordViewListActivity" android:launchMode="singleTop" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PasswordViewListActivity"/>
+        </activity>
+        <activity android:name=".EditPasswordActivity" android:parentActivityName=".ViewPasswordActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewPasswordActivity"/>
+        </activity>
     </application>
 
 </manifest>

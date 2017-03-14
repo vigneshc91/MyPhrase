@@ -24,6 +24,8 @@ public class EditPasswordActivity extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_password);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         final String detailId = intent.getExtras().getString("detail_id");
 
@@ -95,8 +97,10 @@ public class EditPasswordActivity extends MenuActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        MenuItem menuItem = menu.findItem(R.id.menuEditDetail);
-        menuItem.setVisible(false);
+        MenuItem editMenuItem = menu.findItem(R.id.menuEditDetail);
+        editMenuItem.setVisible(false);
+        MenuItem deleteMenuItem = menu.findItem(R.id.menuDeleteDetail);
+        deleteMenuItem.setVisible(false);
         return true;
     }
 

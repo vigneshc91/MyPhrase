@@ -18,5 +18,6 @@ public class SuccessConstants {
     public static final String ENTER_YOUR_NEW_MPIN = "Enter your new mpin";
     public static final String CONFIRM_YOUR_NEW_MPIN = "Confirm your new mpin";
     public static final String ENTER_YOUR_MPIN = "Enter your mpin";
+    public static final String PASSWORD_DELETED_SUCCESSFULLY = "Password deleted successfully";
 
 }

@@ -1,8 +1,10 @@
 package com.phrase.my.myphrase;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -79,17 +82,34 @@ public class PasswordViewListActivity extends MenuActivity {
             }
 
             @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.deletePassword:
-                        SparseBooleanArray selected = detailListAdapter.getSelectedDetailIds();
-                        for (int i=0; i<selected.size(); i++){
-                            if(selected.valueAt(i)){
-                                Detail selectedItem = detailListAdapter.getItem(selected.keyAt(i));
-                                detailListAdapter.remove(selectedItem);
+                        AlertDialog.Builder deleteAlertBuilder = new AlertDialog.Builder(PasswordViewListActivity.this);
+                        deleteAlertBuilder.setTitle(ErrorConstants.ALERT);
+                        deleteAlertBuilder.setMessage(ErrorConstants.WANT_TO_DELETE_PASSWORDS);
+                        deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SparseBooleanArray selected = detailListAdapter.getSelectedDetailIds();
+                                for (int i=0; i<selected.size(); i++){
+                                    if(selected.valueAt(i)){
+                                        Detail selectedItem = detailListAdapter.getItem(selected.keyAt(i));
+                                        detailListAdapter.remove(selectedItem);
+                                    }
+                                }
+                                mode.finish();
                             }
-                        }
-                        mode.finish();
+                        });
+                        deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog deleteAlert = deleteAlertBuilder.create();
+                        deleteAlert.show();
+
                         return true;
                     default:
                         return false;
@@ -124,8 +144,10 @@ public class PasswordViewListActivity extends MenuActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        MenuItem menuItem = menu.findItem(R.id.menuEditDetail);
-        menuItem.setVisible(false);
+        MenuItem editMenuItem = menu.findItem(R.id.menuEditDetail);
+        editMenuItem.setVisible(false);
+        MenuItem deleteMenuItem = menu.findItem(R.id.menuDeleteDetail);
+        deleteMenuItem.setVisible(false);
         return true;
     }
 }

@@ -11,6 +11,10 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="Edit" />
     <item
+        android:id="@+id/menuDeleteDetail"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Delete" />
+    <item
         android:id="@+id/menuChangeMpin"
         android:icon="@android:drawable/ic_lock_idle_lock"
         android:title="Change mPin" />

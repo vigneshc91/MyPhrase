@@ -23,6 +23,8 @@ public class AddPasswordActivity extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_password);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Password passwordInstance = new Password(this);
         mpin = passwordInstance.getPassword();
 
@@ -81,6 +83,8 @@ public class AddPasswordActivity extends MenuActivity {
         createMenuItem.setVisible(false);
         MenuItem editMenuItem = menu.findItem(R.id.menuEditDetail);
         editMenuItem.setVisible(false);
+        MenuItem deleteMenuItem = menu.findItem(R.id.menuDeleteDetail);
+        deleteMenuItem.setVisible(false);
         return true;
     }
 }

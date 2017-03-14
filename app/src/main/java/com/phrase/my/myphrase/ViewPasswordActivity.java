@@ -1,13 +1,16 @@
 package com.phrase.my.myphrase;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.security.GeneralSecurityException;
@@ -23,6 +26,8 @@ public class ViewPasswordActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_password);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userName = (TextView) findViewById(R.id.userNameTextView);
         password = (TextView) findViewById(R.id.passwordTextView);
@@ -95,6 +100,32 @@ public class ViewPasswordActivity extends MenuActivity {
                 Intent editPasswordIntent = new Intent(ViewPasswordActivity.this, EditPasswordActivity.class);
                 editPasswordIntent.putExtra("detail_id", detailId);
                 startActivity(editPasswordIntent);
+                return true;
+            case R.id.menuDeleteDetail:
+                AlertDialog.Builder deleteAlertBuilder = new AlertDialog.Builder(ViewPasswordActivity.this);
+                deleteAlertBuilder.setTitle(ErrorConstants.ALERT);
+                deleteAlertBuilder.setMessage(ErrorConstants.WANT_TO_DELETE_PASSWORD);
+                deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(DbOperations.deleteDetail(Integer.parseInt(detailId.toString()))){
+                            Toast.makeText(ViewPasswordActivity.this, SuccessConstants.PASSWORD_DELETED_SUCCESSFULLY, Toast.LENGTH_SHORT).show();
+                            Intent passwordListIntent = new Intent(ViewPasswordActivity.this, PasswordViewListActivity.class);
+                            startActivity(passwordListIntent);
+                            finish();
+                        } else {
+                            Toast.makeText(ViewPasswordActivity.this, ErrorConstants.PASSWORD_DELETE_FAILED, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog deleteAlert = deleteAlertBuilder.create();
+                deleteAlert.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
