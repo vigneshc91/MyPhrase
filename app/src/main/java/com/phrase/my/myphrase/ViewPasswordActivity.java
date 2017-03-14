@@ -7,20 +7,23 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 
 public class ViewPasswordActivity extends MenuActivity {
 
-    private TextView userName, password, comments;
-    private ToggleButton passwordShow;
     private FloatingActionButton editBtn;
-    String mpin, detailId, maskedPassword = "", decryptedPassword = "";
+    private ListView viewPasswordListView;
+    private DetailViewAdapter detailViewAdapter;
+    String mpin, detailId, decryptedPassword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +32,7 @@ public class ViewPasswordActivity extends MenuActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        userName = (TextView) findViewById(R.id.userNameTextView);
-        password = (TextView) findViewById(R.id.passwordTextView);
-        comments = (TextView) findViewById(R.id.commentsTextView);
         editBtn = (FloatingActionButton) findViewById(R.id.editDetailFabBtn);
-        passwordShow = (ToggleButton) findViewById(R.id.passwordShowToggle);
-
 
         Password passwordPin = new Password(this);
         mpin = passwordPin.getPassword();
@@ -53,16 +51,7 @@ public class ViewPasswordActivity extends MenuActivity {
             }
         });
 
-        passwordShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((ToggleButton) v).isChecked()){
-                    password.setText(decryptedPassword);
-                } else {
-                    password.setText(maskedPassword);
-                }
-            }
-        });
+
 
     }
 
@@ -73,7 +62,10 @@ public class ViewPasswordActivity extends MenuActivity {
     }
 
     private void updateValues(){
+        viewPasswordListView = (ListView) findViewById(R.id.passwordViewListView);
+
         Detail detail = DbOperations.getDetailById(Integer.parseInt(detailId));
+
         setTitle(detail.title);
 
         try {
@@ -82,15 +74,20 @@ public class ViewPasswordActivity extends MenuActivity {
             e.printStackTrace();
         }
 
-        String mask = "";
-        for (int i=0; i<decryptedPassword.length(); i++){
-            mask += "*";
-        }
-        maskedPassword = mask;
+        Pair<String, String> userName = new Pair<>("User Name", detail.userName);
+        Pair<String, String> password = new Pair<>("Password", decryptedPassword);
+        Pair<String, String> comments = new Pair<>("Comments", detail.comment);
+        ArrayList<Pair> values = new ArrayList<Pair>();
+        values.add(userName);
+        values.add(password);
+        values.add(comments);
 
-        userName.setText(detail.userName);
-        password.setText(maskedPassword);
-        comments.setText(detail.comment);
+        detailViewAdapter = new DetailViewAdapter(this, values);
+        viewPasswordListView.setAdapter(detailViewAdapter);
+
+//        userName.setText(detail.userName);
+//        password.setText(maskedPassword);
+//        comments.setText(detail.comment);
     }
 
     @Override
