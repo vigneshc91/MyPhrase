@@ -40,15 +40,18 @@ public class DetailViewAdapter extends ArrayAdapter<Pair> {
         final TextView valueText = (TextView) convertView.findViewById(R.id.passwordViewValue);
         ToggleButton toggleButton = (ToggleButton) convertView.findViewById(R.id.passwordViewToggle);
 
-        headingText.setText(value.first.toString());
+        String headingTextString = value.first.toString();
+        String valueTextString = value.second.toString();
 
-        switch (value.first.toString()){
+        headingText.setText(headingTextString);
+
+        switch (headingTextString){
             case "User Name":
-                valueText.setText(value.second.toString());
+                valueText.setText(valueTextString);
                 toggleButton.setVisibility(View.INVISIBLE);
                 break;
             case "Password":
-                final String password = value.second.toString();
+                final String password = valueTextString;
                 String mask = "";
                 for (int i=0; i<password.length(); i++){
                     mask += "*";
@@ -68,7 +71,7 @@ public class DetailViewAdapter extends ArrayAdapter<Pair> {
                 });
                 break;
             case "Comments":
-                valueText.setText(value.second.toString());
+                valueText.setText(valueTextString);
                 toggleButton.setVisibility(View.INVISIBLE);
                 if(value.second.toString().length() == 0){
                     convertView.setVisibility(View.INVISIBLE);
