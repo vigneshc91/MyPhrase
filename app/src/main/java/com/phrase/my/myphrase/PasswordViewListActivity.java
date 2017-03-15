@@ -64,7 +64,7 @@ public class PasswordViewListActivity extends MenuActivity {
                 mode.setTitle(checkedItemCount + " selected");
                 detailListAdapter.toggleSelection(position);
                 if(checked){
-                    detailListView.getChildAt(position).setBackgroundColor(getResources().getColor(R.color.default_overlay_color));
+                    detailListView.getChildAt(position).setBackgroundColor(getResources().getColor(R.color.listHighlight));
                 } else {
                     detailListView.getChildAt(position).setBackgroundColor(Color.TRANSPARENT);
                 }

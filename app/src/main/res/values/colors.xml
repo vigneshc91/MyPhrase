@@ -2,5 +2,13 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="heading">#CCB34B</color>
+    <color name="btnPrimary">#0C637C</color>
+    <color name="btnFAB">#52907E</color>
+    <color name="btnText">#1D3036</color>
+    <color name="title">#A5A2A2</color>
+    <color name="value">#D3D3D3</color>
+    <color name="divider">#A9A9A9</color>
+    <color name="listHighlight">#696969</color>
 </resources>

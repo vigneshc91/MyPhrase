@@ -33,7 +33,7 @@ public class AddPasswordActivity extends MenuActivity {
         password = (EditText) findViewById(R.id.editPasswordEditTextPassword);
         comments = (EditText) findViewById(R.id.addPasswordEditTextComments);
 
-        addBtn = (Button) findViewById(R.id.editPasswordBtn);
+        addBtn = (Button) findViewById(R.id.addPasswordBtn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
