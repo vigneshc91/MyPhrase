@@ -3,6 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/passwordSearchMenu"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search"
+        android:visible="false"
+        app:showAsAction="always|always" />
+    <item
         android:id="@+id/menuCreateDetail"
         android:icon="@android:drawable/ic_input_add"
         android:title="Create" />
@@ -18,4 +25,7 @@
         android:id="@+id/menuChangeMpin"
         android:icon="@android:drawable/ic_lock_idle_lock"
         android:title="Change mPin" />
+    <item
+        android:id="@+id/menuExitApp"
+        android:title="Exit" />
 </menu>

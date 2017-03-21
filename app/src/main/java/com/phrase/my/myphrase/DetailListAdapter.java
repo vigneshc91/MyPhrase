@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,13 +19,29 @@ import java.util.List;
  * Created by vignesh on 9/3/17.
  */
 
-public class DetailListAdapter extends ArrayAdapter<Detail> {
+public class DetailListAdapter extends ArrayAdapter<Detail> implements Filterable {
 
     private SparseBooleanArray selectedDetailIds;
+    private List<Detail> originalData;
+    private List<Detail> filterData;
+    private PasswordFilter passwordFilter = new PasswordFilter();
 
     public DetailListAdapter(Context context, List<Detail> details){
         super(context, 0, details);
         selectedDetailIds = new SparseBooleanArray();
+        this.originalData = details;
+        this.filterData = details;
+    }
+
+    @Override
+    public int getCount() {
+        return filterData.size();
+    }
+
+    @Nullable
+    @Override
+    public Detail getItem(int position) {
+        return filterData.get(position);
     }
 
     @NonNull
@@ -67,5 +85,40 @@ public class DetailListAdapter extends ArrayAdapter<Detail> {
 
     public SparseBooleanArray getSelectedDetailIds() {
         return  selectedDetailIds;
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return passwordFilter;
+    }
+
+    private class PasswordFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterString = constraint.toString().toLowerCase();
+            FilterResults filterResults = new FilterResults();
+            List<Detail> list = originalData;
+
+            List<Detail> filteredList = new ArrayList<Detail>(originalData.size());
+
+            Detail filterableDetail;
+            for (int i=0; i<list.size(); i++){
+                filterableDetail = list.get(i);
+                if(filterableDetail.title.toLowerCase().contains(filterString)){
+                    filteredList.add(filterableDetail);
+                }
+            }
+            filterResults.values = filteredList;
+            filterResults.count = filteredList.size();
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filterData = (List<Detail>)results.values;
+            notifyDataSetChanged();
+        }
     }
 }

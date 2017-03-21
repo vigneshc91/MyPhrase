@@ -1,5 +1,7 @@
 package com.phrase.my.myphrase;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -148,6 +151,26 @@ public class PasswordViewListActivity extends MenuActivity {
         editMenuItem.setVisible(false);
         MenuItem deleteMenuItem = menu.findItem(R.id.menuDeleteDetail);
         deleteMenuItem.setVisible(false);
+
+        // Search Filter
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchMenuItem = menu.findItem(R.id.passwordSearchMenu);
+        searchMenuItem.setVisible(true);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                detailListAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
         return true;
     }
 }

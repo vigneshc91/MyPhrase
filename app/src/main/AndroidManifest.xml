@@ -15,7 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PasswordViewListActivity" />
+        <activity android:name=".PasswordViewListActivity" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
         <activity android:name=".AddPasswordActivity" android:parentActivityName=".PasswordViewListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

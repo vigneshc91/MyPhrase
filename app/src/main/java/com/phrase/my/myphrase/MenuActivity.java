@@ -3,6 +3,8 @@ package com.phrase.my.myphrase;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +33,9 @@ public class MenuActivity extends AppCompatActivity {
                 Intent mpinIntent = new Intent(MenuActivity.this, MainActivity.class);
                 mpinIntent.putExtra("changePin", true);
                 startActivity(mpinIntent);
+                return true;
+            case R.id.menuExitApp:
+                this.finishAffinity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
